@@ -1,6 +1,6 @@
+streamlit
+requests
 pandas
 matplotlib
-scikit-learn
-xgboost
-lightgbm
+numpy
 scikit-learn

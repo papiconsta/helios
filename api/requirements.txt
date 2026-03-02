@@ -3,4 +3,6 @@ matplotlib
 scikit-learn
 xgboost
 lightgbm
-scikit-learn
+fastapi
+uvicorn
+pydantic
