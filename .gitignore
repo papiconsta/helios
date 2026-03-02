@@ -1,10 +1,39 @@
-# Python-generated files
+# ── Virtual environments ──────────────────────────────────────────────────────
+.venv/
+helios/
+
+# ── Python cache ──────────────────────────────────────────────────────────────
 __pycache__/
 *.py[oc]
+*.pyo
+
+# ── Build / packaging ─────────────────────────────────────────────────────────
 build/
 dist/
 wheels/
-*.egg-info
+*.egg-info/
 
-# Virtual environments
-.venv
+# ── Jupyter ───────────────────────────────────────────────────────────────────
+.ipynb_checkpoints/
+notebooks/anaconda_projects/
+
+# ── uv / pip ──────────────────────────────────────────────────────────────────
+uv.lock
+CACHEDIR.TAG
+
+# ── Data (large files — keep out of git) ──────────────────────────────────────
+data/
+*.csv
+
+# ── Model outputs ─────────────────────────────────────────────────────────────
+*.pkl
+*.joblib
+*.h5
+*.pt
+*.onnx
+
+# ── OS / editor junk ──────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
