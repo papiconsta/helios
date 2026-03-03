@@ -1,5 +1,7 @@
 import numpy as np
 
+# so here probably we are making a Cyclic Encoding
+# in order to capture the cyclical nature of time features like hour and month
 FEATURES = (
     [f'feature_{i}' for i in range(20)]
     + ['forecast_zephyr', 'forecast_boreas']
@@ -7,6 +9,7 @@ FEATURES = (
        'hour_sin', 'hour_cos', 'month_sin', 'month_cos']
 )
 
+# here ther eis the function that generates and adds the extra features
 def add_time_features(df):
     df = df.copy()
     df['hour']      = df['timestamp'].dt.hour

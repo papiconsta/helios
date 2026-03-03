@@ -71,6 +71,6 @@ class PowerForecastModel:
 
 if __name__ == '__main__':
     train = pd.read_csv('../data/forecast_train.csv', parse_dates=['timestamp'])
-    model = PowerForecastModel()
-    model.fit(train)
-    model.save()
+    model = PowerForecastModel() # object init 
+    model.fit(train) # train the model on the training data
+    model.save() 

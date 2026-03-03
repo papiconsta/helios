@@ -1,5 +1,11 @@
 # Helios — Wind Power Forecasting
 
+> **Mission:** Build a meta-forecaster that automatically picks the right model at the right time — or combines them intelligently — to minimize forecast error and maximize trading performance.
+>
+> We went beyond picking. We built a continuous blending model that learns *how much* to trust each signal at each moment — achieving **8.17 MAE vs 24.04 (Boreas)**, a 66% improvement.
+
+---
+
 ## The Problem
 
 The trading desk runs two production models:
