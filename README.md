@@ -1,11 +1,5 @@
 # Helios — Wind Power Forecasting
 
-> **Mission:** Build a meta-forecaster that automatically picks the right model at the right time — or combines them intelligently — to minimize forecast error and maximize trading performance.
->
-> We went beyond picking. We built a continuous blending model that learns *how much* to trust each signal at each moment — achieving **8.17 MAE vs 24.04 (Boreas)**, a 66% improvement.
-
----
-
 ## The Problem
 
 The trading desk runs two production models:
@@ -70,16 +64,6 @@ Training uses **5-fold cross-validation** (no shuffle, respecting time order) to
 | Naive average | ~29.00 | ~39.00 | — |
 | **Our stack** | **8.17** | — | — |
 
-**66% improvement over Boreas. 72% over Zephyr.**
-
-Key observations from the analysis:
-- Zephyr has a systematic bias of +28 MW — it always over-predicts
-- Boreas is better on average but has high variance — it fails confidently
-- Power output follows a strong hourly cycle — time features are critical
-- The meta-model effectively learns to downweight Zephyr's over-confident high predictions
-
----
-
 ## Architecture
 
 ```
@@ -143,30 +127,12 @@ Content-Type: application/json
 }
 ```
 
----
-
-## Operational Considerations
-
-**Retraining** — When new actuals arrive, retrain with:
-```bash
-cd api && python -m src.train
-```
-The model file is volume-mounted so the API picks it up without rebuilding the image.
-
-**Model drift** — The hourly pattern is stable (physics-driven), but the weather feature relationships may drift seasonally. Recommend retraining monthly with a rolling 12-month window.
-
-**Failure modes** — If both Zephyr and Boreas are systematically wrong (e.g. new turbines, grid changes), our model will also degrade since it relies on their signals. Monitor MBE (bias) as the early warning metric — a drift in MBE signals a regime change.
-
-**What Zephyr gets right** — Normal, predictable weather. Our model learns to lean on Zephyr in those conditions.
-
-**What Boreas gets right** — Disruptions, high-wind events. Our model learns to follow Boreas when it diverges significantly from Zephyr.
-
----
-
 ## What We Would Do Next
 
 - **Monitoring endpoint** — `/metrics` returning rolling MAE over the last 24/168 hours
+
 - **Automated retraining pipeline** — triggered when rolling MAE exceeds a threshold
+
 - **Model versioning** — tag each model with training date and OOF MAE
+
 - **CI/CD** — run tests and rebuild Docker image on every push to main
-- **Confidence intervals** — quantile regression to give traders a range, not just a point estimate
